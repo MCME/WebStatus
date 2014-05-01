@@ -1,0 +1,4 @@
+cron:
+- description: update member db
+  url: /ranks/update
+  schedule: every 10 minutes

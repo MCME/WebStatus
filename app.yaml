@@ -15,6 +15,9 @@ handlers:
   static_files: static/txt/robots.txt
   upload: static/robots.txt
 
+- url: /static/(css|js|txt|img)
+  static_dir: static/\1
+
 - url: .*
   script: main.app
 

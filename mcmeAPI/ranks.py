@@ -1,4 +1,5 @@
-from lib import yaml, requests
+import yaml
+from lib import requests
 from mcmeAPI.db import Rank
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
@@ -11,7 +12,7 @@ def fetch_yaml():
        loads, parses, and returns python object'''
     response = requests.get(MCME_YAML_URL)
     raw_yaml = response.content
-
+    response.close()
     return yaml.load(raw_yaml)
 
 def build_ranks_structure(users):
@@ -28,8 +29,7 @@ def build_ranks_structure(users):
     return ranks
 
 def update_rank_db():
-    parsed_yaml = fetch_yaml()
-    ranks = build_ranks_structure(parsed_yaml['users'])
+    ranks = build_ranks_structure(fetch_yaml()['users'])
 
     for rank, people in ranks.iteritems():
         key = ndb.Key(Rank, rank)
@@ -40,6 +40,7 @@ def update_rank_db():
         r.members=people
         r.num_members=len(people)
         r.put()
+    ranks = {}
 
 def get_ranks(rank):
     '''accepts string denoting MCME rank

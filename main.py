@@ -1,12 +1,15 @@
 import webapp2, sys
 
-from mcmeAPI import Front, UpdateRanks
+from mcmeAPI import Front, UpdateRanks, UpdateServers
 from mcmeAPI.endpoints import *
 
 app = webapp2.WSGIApplication([
     (r'/', Front),
     (r'/ranks/update', UpdateRanks),
-    (r'/ranks(/?[A-Za-z]*)', Ranks),
+    (r'/ranks', Ranks),
+    (r'/ranks/([A-Za-z]+)(.json)?', Ranks),
+    (r'/server/(build|freebuild)', ServerStats),
+    (r'/server/update', UpdateServers)
 
 
 ], debug=True)

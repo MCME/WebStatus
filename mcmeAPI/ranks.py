@@ -1,6 +1,7 @@
 from lib import yaml, requests
 from mcmeAPI.db import Rank
 from google.appengine.api import urlfetch
+from google.appengine.ext import ndb
 
 MCME_YAML_URL = 'http://build.mcmiddleearth.com/cache/uploads/users.yml'
 
@@ -19,6 +20,7 @@ def build_ranks_structure(users):
     ranks = {}
     for user, vals in users.iteritems():
         rank = vals['group']
+        if rank == 'root': rank = 'valar'
         if ranks.get(rank): 
             ranks[rank].append(user)
         else:
@@ -30,11 +32,18 @@ def update_rank_db():
     ranks = build_ranks_structure(parsed_yaml['users'])
 
     for rank, people in ranks.iteritems():
-        r = Rank(rank=rank, members=people)
+        key = ndb.Key(Rank, rank)
+        r = key.get()
+        if r is None: 
+            r = Rank(id=rank)
+        r.rank=rank
+        r.members=people
+        r.num_members=len(people)
         r.put()
 
 def get_ranks(rank):
     '''accepts string denoting MCME rank
        returns list containing names of desired rank
        or none'''
-    pass
+    key = ndb.Key(Rank, rank)
+    return key.get()

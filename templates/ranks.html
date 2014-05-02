@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MCME {{ rank.rank.capitalize() }}</title>
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <h1>{{ rank.rank.capitalize() }}</h1>
+            <ul>
+                {% for name in rank.members %}
+                    <li>{{name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+</html>

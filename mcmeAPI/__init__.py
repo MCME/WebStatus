@@ -2,7 +2,6 @@ from lib.flask import Flask
 from mcmeAPI.ranks import update_rank_db
 from mcmeAPI.servers import update_server_db
 
-
 app = Flask(__name__)
 
 import mcmeAPI.endpoints
@@ -18,3 +17,4 @@ import mcmeAPI.endpoints
 # class UpdateServers(Handler):
 # 	def get(self):
 # 		update_server_db()
+

@@ -41,6 +41,7 @@ def update_rank_db():
         r.num_members=len(people)
         r.put()
     ranks = {}
+    return
 
 def get_ranks(rank):
     '''accepts string denoting MCME rank

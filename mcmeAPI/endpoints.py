@@ -4,11 +4,9 @@ from mcmeAPI.utils import Handler
 from mcmeAPI.ranks import get_ranks
 from mcmeAPI.servers import get_status
 
-class Ranks(Handler):
-    def __init__(self, request, response):
-        super(Ranks, self).__init__(request, response)
-        self.response.headers['Content-Type'] = 'application/json'
-
+@app.route('/ranks' defaults={'rank': None})
+@app.route('/ranks/<rank>')
+def ranks(rank):
     def get(self, path=None, json=None):
         if not path:
             self.writeJSON({'all_ranks':'everybody!'})

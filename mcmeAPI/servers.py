@@ -1,7 +1,7 @@
 from lib.minecraft_query import MinecraftQuery
-from mcmeAPI.db import Server
-from google.appengine.api import urlfetch
-from google.appengine.ext import ndb
+# from mcmeAPI.db import Server
+# from google.appengine.api import urlfetch
+# from google.appengine.ext import ndb
 
 SERVERS = ['build', 'freebuild']
 

@@ -22,7 +22,7 @@ def ranks(rank):
         rank_list = get_ranks(rank)
         if rank_list is not None:
             if json:
-                return json.dumps({rank:rank_list})#rank.serialize)
+                return json.dumps({'rank':rank, 'players': rank_list, 'num_players': len(rank_list)})#rank.serialize)
             else:
                 #render html page
                 pass

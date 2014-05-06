@@ -19,7 +19,7 @@ def fetch_yaml():
 
 def update_user_db():
     for user, attr in fetch_yaml()['users'].iteritems():
-        r = ses.query(User).filter(User.name==user).all()
+        r = ses.query(User).filter(User.name==user).one()
         if not r: 
             r = User()
         r.rank=attr['group']

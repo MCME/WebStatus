@@ -36,6 +36,8 @@ def get_ranks(rank):
     '''accepts string denoting MCME rank
        returns list containing names of desired rank
        or none'''
+    if rank is 'staff':
+        pass
     user_list = ses.query(User).filter(User.rank==rank).all()
     return [u.name for u in user_list]
     

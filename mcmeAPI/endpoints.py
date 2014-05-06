@@ -8,22 +8,21 @@ from mcmeAPI.servers import get_status
 def front():
     return 'MCME API'
 
-@app.route('/ranks/update')
+@app.route('/users/update')
 def update_ranks():
     update_user_db()
     return 'OK'
 
-@app.route('/ranks', defaults={'rank': None})
-@app.route('/ranks/<rank>')
+@app.route('/export/<rank>')
 def ranks(rank):
-    if rank is None:
-        return jsonify({'all_ranks':'everybody!'})
-    else:
-        rank_list = get_ranks(rank)
-        if rank_list is not None:
-            return jsonify({'rank':rank, 'players': rank_list, 'num_players': len(rank_list)})#rank.serialize)
+    rank_list = get_ranks(rank)
+    if len(rank_list) > 0:
+        return jsonify({'rank':rank, 'players': rank_list, 'num_players': len(rank_list)})#rank.serialize)
 
-        return jsonify({"error": "Can't find the rank '"+rank+"'"}), 404
+    return jsonify({"error": "Can't find the rank '"+rank+"'"}), 404
+
+
+
 
 # class ServerStats(Handler):
 #     def __init(self, request, response):

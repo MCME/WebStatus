@@ -1,4 +1,4 @@
-import json
+from flask import jsonify
 from mcmeAPI import app
 from mcmeAPI.ranks import get_ranks, update_user_db
 from mcmeAPI.servers import get_status
@@ -17,18 +17,13 @@ def update_ranks():
 @app.route('/ranks/<rank>')
 def ranks(rank):
     if rank is None:
-        return json.dumps({'all_ranks':'everybody!'})
+        return jsonify({'all_ranks':'everybody!'})
     else:
         rank_list = get_ranks(rank)
         if rank_list is not None:
-            if json:
-                return json.dumps({'rank':rank, 'players': rank_list, 'num_players': len(rank_list)})#rank.serialize)
-            else:
-                #render html page
-                pass
-        else:
-            self.error(404)
-            self.writeJSON({"error": "Can't find the rank '"+rank+"'"})
+            return jsonify({'rank':rank, 'players': rank_list, 'num_players': len(rank_list)})#rank.serialize)
+
+        return jsonify({"error": "Can't find the rank '"+rank+"'"}), 404
 
 # class ServerStats(Handler):
 #     def __init(self, request, response):

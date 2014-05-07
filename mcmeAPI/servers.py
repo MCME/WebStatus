@@ -1,5 +1,8 @@
+import logging
+from datetime import datetime
 from lib.minecraft_query import MinecraftQuery
-# from mcmeAPI.db import Server
+from db.models import Server
+from db import db_session as ses
 # from google.appengine.api import urlfetch
 # from google.appengine.ext import ndb
 
@@ -21,16 +24,19 @@ def update_server_db():
         status = fetch_server_status(server)
         error = status.get('error')
 
-        key = ndb.Key(Server, server)
-        s = key.get()
+        s = ses.query(Server).get(server)
         if s is None:
-            s = Server(id=server)
+            s = Server()
         s.name = server
         s.status = 'online' if not error else 'offline'
         s.players = status.get('players')
         s.num_players = status.get('numplayers')
-        s.put()
+        s.maxplayers = status.get('maxplayers')
+        s.plugins = status.get('plugins')
+        s.updated = datetime.now()
+        ses.add(s)
+    ses.commit()
+    return
 
 def get_status(server):
-    key = ndb.Key(Server, server)
-    return key.get()
+    return ses.query(Server).get(server)  

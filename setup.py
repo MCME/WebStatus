@@ -1,6 +1,6 @@
 from setuptools import setup
 setup(
-	name="MCME API",
+	name="mcmeAPI",
 	version="0.1",
 	packages=['mcmeAPI'],
 	include_package_data=True,

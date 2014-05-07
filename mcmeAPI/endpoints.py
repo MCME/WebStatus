@@ -11,7 +11,7 @@ def front():
 
 @app.route('/users/update')
 def update_ranks():
-    update_user_db()
+    a=update_user_db()
     return 'OK'
 
 @app.route('/export/<group>')

@@ -44,7 +44,7 @@ class Server(Base):
                  'players':self.players, 
                  'num_players':self.num_players, 
                  'maxplayers':self.maxplayers,
-                 'plugins':self.plugins
+                 'plugins':self.plugins,
                  'updated':dump_datetime(self.updated)})
 
 def dump_datetime(value):

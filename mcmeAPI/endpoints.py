@@ -1,39 +1,45 @@
-from lib.minecraft_query import MinecraftQuery
+import json
+from flask import jsonify
+from mcmeAPI import app
+from mcmeAPI.users import get_user_group, get_user, update_user_db
+from mcmeAPI.servers import get_status, update_server_db
 
-from mcmeAPI.utils import Handler
-from mcmeAPI.ranks import get_ranks
-from mcmeAPI.servers import get_status
 
-class Ranks(Handler):
-    def __init__(self, request, response):
-        super(Ranks, self).__init__(request, response)
-        self.response.headers['Content-Type'] = 'application/json'
+@app.route('/')
+def front():
+    return 'MCME API'
 
-    def get(self, path=None, json=None):
-        if not path:
-            self.writeJSON({'all_ranks':'everybody!'})
-        else:
-            rank = get_ranks(path.lstrip('/'))
-            if rank is not None:
-                if json:
-                    self.writeJSON(rank.serialize)
-                else:
-                    #render html page
-                    self.response.headers['Content-Type'] = 'text/html'
-                    self.render('ranks.html', rank=rank)
-            else:
-                self.error(404)
-                self.writeJSON({"error": "Can't find the rank '"+path.lstrip('/')+"'"})
+@app.route('/users/update')
+def update_ranks():
+    a=update_user_db()
+    return 'OK'
 
-class ServerStats(Handler):
-    def __init(self, request, response):
-        super(ServerStats, self).__init__(request,response)
-        self.response.headers['Content-Type'] = 'application/json'
+@app.route('/export/<group>')
+def ranks(group):
+    group_list = get_user_group(group)
+    if len(group_list) > 0:
+        return jsonify({'group':group, 'players': group_list, 'num_players': len(group_list)})#group.serialize)
 
-    def get(self, server_name):
-        server = get_status(server_name)
-        if server is not None:
-            self.writeJSON(server.serialize)
-        else:
-            self.error(404)
-            self.writeJSON({"error":"Trouble connecting to server: "+server_name})
+    return jsonify({"error": "Can't find the group '"+group+"'"}), 404
+
+@app.route('/export/user/<user_name>')
+def users(user_name):
+    user = get_user(user_name)
+    if user is not None:
+        return jsonify(user.serialize)
+
+    return jsonify({"error": "Can't find the user '"+user_name+"'"}), 404
+
+@app.route('/server/<server_name>')
+def servers(server_name):
+    server = get_status(server_name)
+    if server is not None:
+        return jsonify(server.serialize)
+    else:
+        return jsonify({"error": "Trouble connecting to the server '"+server_name+"'"}), 404
+
+@app.route('/server/update')
+def update_servers():
+    update_server_db()
+    return 'OK'
+

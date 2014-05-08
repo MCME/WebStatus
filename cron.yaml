@@ -1,8 +1,0 @@
-cron:
-- description: update member db
-  url: /ranks/update
-  schedule: every 90 minutes
-
-- description: update server db
-  url: /server/update
-  schedule: every 1 minutes

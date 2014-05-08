@@ -13,11 +13,11 @@ Current Endpoints
 All output json.
 
 ###Users Groups
-e.g. mcme.joshr.hk/export/<group>
+e.g. mcme.joshr.hk/export/artist  
   *(use mcme ranks, non-plural: valar, foreman, artisan, etc.)*
 
 ###Individual Users
-e.g. mcme.joshr.hk/export/user/<name>
+e.g. mcme.joshr.hk/export/user/minecraftname
 
 ###Servers
 e.g. mcme.joshr.hk/server/build

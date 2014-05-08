@@ -1,25 +1,24 @@
 WebStatus
 =========
 
-API and server query results
+API and server query results, and eventually staff management of users.
 
-Currently developed for Google App Engine using python.
+Currently developed using Flask, to be deployed on MCME build server.
 
-Development url is at mcme-api.appspot.com.
+Development url is currently at mcme.joshr.hk
 
 
 Current Endpoints
 =================
+All output json.
 
-###Ranks
-e.g. [mcme-api.appspot.com/ranks/artist](http://mcme-api.appspot.com/ranks/artist)
+###Users Groups
+e.g. mcme.joshr.hk/export/<group>
   *(use mcme ranks, non-plural: valar, foreman, artisan, etc.)*
 
-Append '.json' to get a json output for given rank
-
+###Individual Users
+e.g. mcme.joshr.hk/export/user/<name>
 
 ###Servers
-e.g. [mcme-api.appspot.com/server/build](http://mcme-api.appspot.com/server/build)
+e.g. mcme.joshr.hk/server/build
   *(also /freebuild)*
-
-Always outputs .json
